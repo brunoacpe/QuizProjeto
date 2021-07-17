@@ -39,7 +39,6 @@ public class QuizController {
     }
 
     //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
-    //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
     @PostMapping
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario){
         Optional<Usuario> jogador = usuarioDAO.listarTodos().stream().filter(u -> u.equals(usuario)).findFirst();
