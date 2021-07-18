@@ -66,6 +66,8 @@ public class QuizController {
                 jogador.get().setCombo(1);
             }
         }
+
+        usuarioServices.vidas(jogador, result);
         return result;
     }
 

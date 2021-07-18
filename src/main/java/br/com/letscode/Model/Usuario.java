@@ -1,4 +1,5 @@
 package br.com.letscode.Model;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,16 @@ import java.util.List;
 
 public class Usuario {
 
-    @NotNull(message = "O nome é obrigatório.")
+
     private String nome;
-    @NotNull(message = "A senha é obrigatória.")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String senha;
+
     private double pontuação;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int vidas = 3 ;
     private List<Movie> listaDoJogador;
     private double combo = 1;
+
 
 }

@@ -12,7 +12,6 @@ import java.util.Optional;
 @Service
 public class UsuarioServices {
 
-    //TODO- Escrever o DAO;
     private UsuarioDAO usuarioDAO;
 
     @Autowired
@@ -36,8 +35,26 @@ public class UsuarioServices {
         return usuarioDAO.persistirUsuario(usuario);
     }
 
+
     public Usuario atualizarPontos(Usuario usuario, double pontos){
             usuario.setPontuação(usuario.getPontuação()+pontos);
             return usuarioDAO.atualizarRanking(usuario);
     }
+
+    public int vidas(Optional<Usuario> usuario, boolean acertouPergunta){
+        int vidasIniciais = usuario.get().getVidas();
+        int vidasAtualizadas;
+        if (acertouPergunta) {
+            vidasAtualizadas = usuario.get().getVidas();
+            System.out.println("Você acertou! \nVidas para tentativas =  " + vidasAtualizadas);
+        }else {
+            vidasAtualizadas = vidasIniciais--;
+            usuario.get().setVidas(vidasAtualizadas);
+            System.out.println("Você errou! \nVidas para tentativas =  " + vidasAtualizadas);
+        }
+
+        return vidasAtualizadas;
+    }
+
 }
+
