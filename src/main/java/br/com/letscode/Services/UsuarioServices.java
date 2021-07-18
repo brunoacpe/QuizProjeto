@@ -12,7 +12,6 @@ import java.util.Optional;
 @Service
 public class UsuarioServices {
 
-    //TODO- Escrever o DAO;
     private UsuarioDAO usuarioDAO;
 
     @Autowired
@@ -37,12 +36,9 @@ public class UsuarioServices {
     }
 
     public Usuario atualizarPontos(Usuario usuario, boolean result){
-        if(result){
-            usuario.setPontuação(usuario.getPontuação()+1);
-            return usuarioDAO.atualizarRanking(usuario);
-        }
-        //todo
+        //Amora -->
         return null;
     }
 
 }
+
