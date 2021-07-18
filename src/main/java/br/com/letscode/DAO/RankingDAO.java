@@ -51,9 +51,9 @@ public class RankingDAO {
         Usuario usuario = new Usuario();
         usuario.setNome(st.nextToken());
         usuario.setPontuação(Integer.valueOf(st.nextToken()));
+        //TODO -- AINDA ANALISAR SE AS VIDAS ESTÃO 0 PARA NÃO RETORNAR ELAS;
         return usuario;
     }
-
     private String formatar(Usuario usuario){
         return String.format("%s,%s",usuario.getNome(),usuario.getPontuação());
     }
