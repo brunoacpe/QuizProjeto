@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class RankingDAO {
         this.path = Paths.get(caminho);
     }
 
-    public Usuario persistirUsuario(Usuario usuario){
+    public Optional<Usuario> persistirUsuario(Optional<Usuario> usuario){
         try(BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.APPEND)){
             bf.write(formatar(usuario));
         } catch (IOException e) {
@@ -54,7 +55,7 @@ public class RankingDAO {
         //TODO -- AINDA ANALISAR SE AS VIDAS ESTÃO 0 PARA NÃO RETORNAR ELAS;
         return usuario;
     }
-    private String formatar(Usuario usuario){
-        return String.format("%s,%s",usuario.getNome(),usuario.getPontuação());
+    private String formatar(Optional<Usuario> usuario){
+        return String.format("%s,%s",usuario.get().getNome(),usuario.get().getPontuação());
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,7 +48,7 @@ public class QuizController {
     //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
     //TODO Criar exceção de senha/usuário inválido e de ImdbId do filme inválido
     @PostMapping
-    public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario){
+    public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
         //fiz uma pequena alteraçao comentar com a galera
         List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());

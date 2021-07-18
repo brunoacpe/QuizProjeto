@@ -14,6 +14,8 @@ import java.beans.BeanProperty;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -80,16 +82,29 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public Usuario converterLinhaEmUsuarioRankeado(String linha){
-        StringTokenizer st = new StringTokenizer(linha,";");
-        Usuario usuario = new Usuario();
-        return null;
-    }
     public String formatar(Usuario usuario) {
         return String.format("%s;%s;%s\n",usuario.getNome(),usuario.getSenha(),usuario.getVidas());
     }
 
-    public Usuario atualizarRanking(Usuario usuario) {
-        return null;
+    public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
+        List<String>  x = new ArrayList<>();
+        String line;
+        try(BufferedReader br = Files.newBufferedReader(pathUsuarios)){
+            while((line = br.readLine())!=null){
+                if(!line.contains(usuario.get().getNome())){
+                    x.add(line);
+                }
+            }
+        }
+
+        Files.delete(pathUsuarios);
+        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\ecommerceServlet\\src\\main\\java\\br\\com\\letscode\\estoqueEntrada.txt", StandardCharsets.UTF_8);
+        for(String s:x){
+            writer.println(s);
+        }
+        writer.close();
+
+        return usuario;
     }
+
 }
