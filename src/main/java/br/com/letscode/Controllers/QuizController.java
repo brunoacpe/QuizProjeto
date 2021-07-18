@@ -6,6 +6,7 @@ import br.com.letscode.DAO.UsuarioDAO;
 import br.com.letscode.Model.Movie;
 import br.com.letscode.Model.Usuario;
 import br.com.letscode.Services.MovieServices;
+import br.com.letscode.Services.QuizzServices;
 import br.com.letscode.Services.UsuarioServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,19 +27,21 @@ public class QuizController {
 
     private UsuarioServices usuarioServices;
     private MovieServices movieServices;
+    private QuizzServices quizzServices;
 
     @Autowired
-    public QuizController(UsuarioServices usuarioServices, MovieServices movieServices){
+    public QuizController(UsuarioServices usuarioServices, MovieServices movieServices,QuizzServices quizzServices){
         this.usuarioServices = usuarioServices;
         this.movieServices = movieServices;
+        this.quizzServices = quizzServices;
     }
 
 
     @GetMapping
-    public List<Movie> listarFilmes(){
+    public List<Movie> listarFilmes(Usuario usuario){
         //No caso só retorna 2 filmes;
         //TODO -- Parte aonde vem a implementação do guilherme ->>
-        return movieServices.listarTodos();
+        return movieServices.filmesAleatorios(usuario);
     }
 
     //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
@@ -46,7 +49,8 @@ public class QuizController {
     @PostMapping
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario){
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
-        List<Movie> opcoesDoQuiz = listarFilmes();
+        //fiz uma pequena alteraçao comentar com a galera
+        List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());
         Collections.sort(opcoesDoQuiz,  Comparator.comparing(Movie::getScore));
         Optional<Movie> opcaoSelecionadaValida = opcoesDoQuiz.stream()
                 .filter(m -> m.getImdbId().equals(opcaoSelecionada))
@@ -55,10 +59,11 @@ public class QuizController {
         if(jogador.isPresent() && opcaoSelecionadaValida.isPresent()){
             if(opcoesDoQuiz.get(0).getImdbId().equals(opcaoSelecionada)){
                 result = true;
-                usuarioServices.atualizarPontos(usuario, result);
+                jogador.get().setCombo(jogador.get().getCombo()+0.1);
+                usuarioServices.atualizarPontos(usuario, quizzServices.pontosFeitos(jogador.get()));
             }else{
                 result = false;
-                usuarioServices.atualizarPontos(usuario, result);
+                jogador.get().setCombo(1);
             }
         }
 

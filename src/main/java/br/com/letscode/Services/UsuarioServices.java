@@ -35,9 +35,10 @@ public class UsuarioServices {
         return usuarioDAO.persistirUsuario(usuario);
     }
 
-    public Usuario atualizarPontos(Usuario usuario, boolean result){
-        //Amora -->
-        return null;
+
+    public Usuario atualizarPontos(Usuario usuario, double pontos){
+            usuario.setPontuação(usuario.getPontuação()+pontos);
+            return usuarioDAO.atualizarRanking(usuario);
     }
 
     public int vidas(Optional<Usuario> usuario, boolean acertouPergunta){
