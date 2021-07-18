@@ -61,6 +61,8 @@ public class QuizController {
                 usuarioServices.atualizarPontos(usuario, result);
             }
         }
+
+        usuarioServices.vidas(jogador, result);
         return result;
     }
 
