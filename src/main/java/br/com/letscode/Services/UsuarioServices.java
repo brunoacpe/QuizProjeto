@@ -36,13 +36,8 @@ public class UsuarioServices {
         return usuarioDAO.persistirUsuario(usuario);
     }
 
-    public Usuario atualizarPontos(Usuario usuario, boolean result){
-        if(result){
-            usuario.setPontuação(usuario.getPontuação()+1);
+    public Usuario atualizarPontos(Usuario usuario, double pontos){
+            usuario.setPontuação(usuario.getPontuação()+pontos);
             return usuarioDAO.atualizarRanking(usuario);
-        }
-        //todo
-        return null;
     }
-
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +20,9 @@ public class Usuario {
     private String nome;
     @NotNull(message = "A senha é obrigatória.")
     private String senha;
-    private int pontuação;
+    private double pontuação;
     private int vidas = 3 ;
+    private List<Movie> listaDoJogador;
+    private double combo = 1;
 
 }
