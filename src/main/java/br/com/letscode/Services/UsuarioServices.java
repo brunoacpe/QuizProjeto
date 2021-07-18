@@ -40,5 +40,20 @@ public class UsuarioServices {
         return null;
     }
 
+    public int vidas(Optional<Usuario> usuario, boolean acertouPergunta){
+        int vidasIniciais = usuario.get().getVidas();
+        int vidasAtualizadas;
+        if (acertouPergunta) {
+            vidasAtualizadas = usuario.get().getVidas();
+            System.out.println("Você acertou! \nVidas para tentativas =  " + vidasAtualizadas);
+        }else {
+            vidasAtualizadas = vidasIniciais--;
+            usuario.get().setVidas(vidasAtualizadas);
+            System.out.println("Você errou! \nVidas para tentativas =  " + vidasAtualizadas);
+        }
+
+        return vidasAtualizadas;
+    }
+
 }
 
