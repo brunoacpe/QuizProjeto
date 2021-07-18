@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioServices {
@@ -19,7 +20,9 @@ public class UsuarioServices {
         this.usuarioDAO = usuarioDAO;
     }
 
-
+    public Optional<Usuario> procurarUsuario(Usuario usuario){
+        return usuarioDAO.procurarUsuario(usuario.getNome(),usuario.getSenha());
+    }
     public List<Usuario> listar() {
         return this.usuarioDAO.listarTodos();
     }
@@ -30,9 +33,16 @@ public class UsuarioServices {
         if (!(nome.length() > 4 && nome.length() < 8) || !(senha.length() > 4 && senha.length() < 8)){
             throw new CadastroDeUsuarioInvalido();
         }
-            //Tem que ter de 4-8 caracteres na senha e 5 a 10 nome;
-            return usuarioDAO.persistirUsuario(usuario);
-        //TODO- Implementar;
+        return usuarioDAO.persistirUsuario(usuario);
+    }
+
+    public Usuario atualizarPontos(Usuario usuario, boolean result){
+        if(result){
+            usuario.setPontuação(usuario.getPontuação()+1);
+            return usuarioDAO.atualizarRanking(usuario);
+        }
+        //todo
+        return null;
     }
 
 }

@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,8 @@ import java.util.stream.Collectors;
 @Component
 public class UsuarioDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
-    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
+    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path pathUsuarios;
     private Path pathRanking;
 
@@ -59,8 +60,15 @@ public class UsuarioDAO {
         return usuarioList;
     }
 
-    public void procurarUsuario(){
-        //TODO - Método que ira fazer a autenticação para ver se o usuário realmente existe e pode jogar;
+    public Optional<Usuario> procurarUsuario(String nome, String senha){
+        List<Usuario> listUsuario = listarTodos();
+        Optional<Usuario> usuario = listUsuario.stream()
+                .filter(n -> n.getNome().equalsIgnoreCase(nome)&& senha.equalsIgnoreCase(senha))
+                .findAny();
+        if (usuario.isEmpty()){
+            //Lançar um erro dizendo que o usuário não foi encontrado.
+        }
+        return usuario;
     }
 
     public Usuario converterLinhaEmUsuario(String linha){
@@ -72,7 +80,16 @@ public class UsuarioDAO {
         return usuario;
     }
 
+    public Usuario converterLinhaEmUsuarioRankeado(String linha){
+        StringTokenizer st = new StringTokenizer(linha,";");
+        Usuario usuario = new Usuario();
+        return null;
+    }
     public String formatar(Usuario usuario) {
         return String.format("%s;%s;%s\n",usuario.getNome(),usuario.getSenha(),usuario.getVidas());
+    }
+
+    public Usuario atualizarRanking(Usuario usuario) {
+        return null;
     }
 }

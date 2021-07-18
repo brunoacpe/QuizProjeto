@@ -17,9 +17,8 @@ import lombok.Setter;
 public class Movie {
 
     private String title;
-    private Integer year;
+    private String year;
     private String imdbId;
-    private String type;
     private Double rating;
     private Long votes;
     private Double score;

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MovieDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
     private Path path;
 
     @PostConstruct
@@ -57,15 +57,17 @@ public class MovieDAO {
         StringTokenizer st = new StringTokenizer(linha,";");
         Movie movie = new Movie();
         movie.setTitle(st.nextToken());
-        movie.setYear(Integer.valueOf(st.nextToken()));
+        movie.setYear(st.nextToken());
+        movie.setImdbId(st.nextToken());
         movie.setRating(Double.valueOf(st.nextToken()));
+        movie.setVotes(Long.valueOf(st.nextToken()));
         movie.setScore(Double.valueOf(st.nextToken()));
         return movie;
     }
 
     public String formatar(Movie movie) {
         //Nome - Ano - Rating - Score
-        return String.format("%s;%s;%s;%s;\n",movie.getTitle(),movie.getYear(),movie.getRating(),movie.getScore());
+        return String.format("%s;%s;%s;%s;%s;%s\n",movie.getTitle(),movie.getYear(),movie.getImdbId(),movie.getRating(),movie.getVotes(),movie.getScore());
     }
 
 }
