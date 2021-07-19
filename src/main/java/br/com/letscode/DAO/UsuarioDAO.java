@@ -98,7 +98,7 @@ public class UsuarioDAO {
         }
 
         Files.delete(pathUsuarios);
-        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\ecommerceServlet\\src\\main\\java\\br\\com\\letscode\\estoqueEntrada.txt", StandardCharsets.UTF_8);
+        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv", StandardCharsets.UTF_8);
         for(String s:x){
             writer.println(s);
         }

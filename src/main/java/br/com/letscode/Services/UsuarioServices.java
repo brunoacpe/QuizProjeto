@@ -57,7 +57,7 @@ public class UsuarioServices {
             usuario.get().setVidas(vidasAtualizadas);
             System.out.println("Você errou! \nVidas para tentativas =  " + vidasAtualizadas);
         }
-        usuario = usuarioDAO.removerUsuario(usuario);
+        usuario = usuarioDAO.removerUsuarioReescrever(usuario);
         if (usuario.get().getVidas()==0){
             return rankingDAO.persistirUsuario(usuario);
         }
