@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class JogosDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv";
     private Path path;
 
     @PostConstruct

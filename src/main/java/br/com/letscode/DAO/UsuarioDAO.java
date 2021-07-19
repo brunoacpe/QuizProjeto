@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 @Component
 public class UsuarioDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
-    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
+    private String caminhoRanking = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path pathUsuarios;
     private Path pathRanking;
 
@@ -103,7 +103,7 @@ public class UsuarioDAO {
         }
 
         Files.delete(pathUsuarios);
-        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv", StandardCharsets.UTF_8);
+        PrintWriter writer = new PrintWriter("Files\\usuarios.csv", StandardCharsets.UTF_8);
         for(String s:x){
             writer.println(s);
         }

@@ -6,6 +6,7 @@ import br.com.letscode.Exceptions.CadastroDeUsuarioInvalido;
 import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
 import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Usuario;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,10 @@ public class UsuarioServices {
     public Usuario criarUsuario(Usuario usuario) throws CadastroDeUsuarioInvalido {
         String nome = usuario.getNome();
         String senha = usuario.getSenha();
-        if (!(nome.length() > 4 && nome.length() < 8) || !(senha.length() > 4 && senha.length() < 8)){
+        if (!(nome.length() >= 5 && nome.length() <= 10) || !(senha.length() >= 4 && senha.length() <= 8)){
             throw new CadastroDeUsuarioInvalido();
         }
+        usuario.setSenha(DigestUtils.sha1Hex(usuario.getSenha()));
         return usuarioDAO.persistirUsuario(usuario);
     }
 

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MovieDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
     private Path path;
 
     @PostConstruct
