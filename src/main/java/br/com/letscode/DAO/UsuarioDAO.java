@@ -67,6 +67,9 @@ public class UsuarioDAO {
         Optional<Usuario> usuario = listUsuario.stream()
                 .filter(n -> n.getNome().equalsIgnoreCase(nome)&& senha.equalsIgnoreCase(senha))
                 .findAny();
+        if(usuario.get().getVidas()==0){
+            //Lançar um erro dizendo que o usuário não tem vidas para jogar.
+        }
         if (usuario.isEmpty()){
             //Lançar um erro dizendo que o usuário não foi encontrado.
         }
