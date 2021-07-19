@@ -25,7 +25,6 @@ public class Usuario {
     private double pontuação;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private int vidas = 3 ;
-    private List<Movie> listaDoJogador;
     private double combo = 1;
 
 

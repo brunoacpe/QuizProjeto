@@ -44,10 +44,10 @@ public class QuizController {
 
 
     @GetMapping
-    public List<Movie> listarFilmes(Usuario usuario){
+    public List<Movie> listarFilmes(){
         //No caso só retorna 2 filmes;
         //TODO -- Parte aonde vem a implementação do guilherme ->>
-        return movieServices.filmesAleatorios(usuario);
+        return movieServices.filmesAleatorios();
     }
 
     //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
@@ -56,7 +56,7 @@ public class QuizController {
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente, IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
         //fiz uma pequena alteraçao comentar com a galera
-        List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());//aqui que busca os filmes
+        List<Movie> opcoesDoQuiz = movieServices.getDoisFilmes();//aqui que busca os filmes
         Collections.sort(opcoesDoQuiz,  Comparator.comparing(Movie::getScore));
         Optional<Movie> opcaoSelecionadaValida = opcoesDoQuiz.stream()
                 .filter(m -> m.getImdbId().equals(opcaoSelecionada))
@@ -72,7 +72,6 @@ public class QuizController {
                 jogador.get().setCombo(1);
             }
         }
-
         usuarioServices.vidas(jogador, result);
         jogoServices.atualizarJogo(jogador);
         return result;
