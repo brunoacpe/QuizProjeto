@@ -1,4 +1,5 @@
 package br.com.letscode.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,12 +20,13 @@ public class Usuario {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nome;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnore
     private String senha;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private double pontuação;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonIgnore
     private int vidas = 3 ;
+    @JsonIgnore
     private double combo = 1;
 
 
