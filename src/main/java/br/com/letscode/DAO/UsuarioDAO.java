@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -67,8 +68,7 @@ public class UsuarioDAO {
     public Optional<Usuario> procurarUsuario(String nome, String senha) throws VidaInsuficiente, UsuarioNaoEncontrado {
         List<Usuario> listUsuario = listarTodos();
         Optional<Usuario> usuario = listUsuario.stream()
-                .filter(n -> n.getNome().equalsIgnoreCase(nome)&& senha.equalsIgnoreCase(senha))
-                .findAny();
+                .filter(n -> n.getNome().equalsIgnoreCase(nome)&& n.getSenha().equalsIgnoreCase(DigestUtils.sha1Hex(senha))).findAny();
         if(usuario.get().getVidas()==0){
             throw new VidaInsuficiente();
         }

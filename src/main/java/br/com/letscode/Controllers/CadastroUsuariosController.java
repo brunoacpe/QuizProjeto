@@ -6,6 +6,7 @@ import br.com.letscode.Model.Movie;
 import br.com.letscode.Model.Usuario;
 import br.com.letscode.Services.MovieServices;
 import br.com.letscode.Services.UsuarioServices;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +45,7 @@ public class CadastroUsuariosController {
     public Usuario criarUsuario(@RequestBody Usuario usuario) throws CadastroDeUsuarioInvalido {//Como ele vai reconhecer a requisição como JSON e criar um Objeto???
         Usuario usuarioNovo = new Usuario();
         usuarioNovo.setNome(usuario.getNome());
-        usuarioNovo.setSenha(usuario.getSenha());
+        usuarioNovo.setSenha(DigestUtils.sha1Hex(usuario.getSenha()));
         usuarioNovo.setVidas(3);
         usuarioNovo.setPontuação(0);
         //ver com o grupo sobre a lista de filmes para cada usuario
