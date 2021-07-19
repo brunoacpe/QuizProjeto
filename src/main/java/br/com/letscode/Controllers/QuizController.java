@@ -3,6 +3,8 @@ package br.com.letscode.Controllers;
 
 import br.com.letscode.DAO.MovieDAO;
 import br.com.letscode.DAO.UsuarioDAO;
+import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
+import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Movie;
 import br.com.letscode.Model.Usuario;
 import br.com.letscode.Services.MovieServices;
@@ -46,9 +48,9 @@ public class QuizController {
     }
 
     //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
-    //TODO Criar exceção de senha/usuário inválido e de ImdbId do filme inválido
+    //TODO lançar exceção de SenhaUsuarioInvalido e ImdbId do filme inválido
     @PostMapping
-    public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws IOException {
+    public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente, IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
         //fiz uma pequena alteraçao comentar com a galera
         List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());//aqui que busca os filmes

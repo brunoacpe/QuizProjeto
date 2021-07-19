@@ -3,6 +3,8 @@ package br.com.letscode.Services;
 import br.com.letscode.DAO.RankingDAO;
 import br.com.letscode.DAO.UsuarioDAO;
 import br.com.letscode.Exceptions.CadastroDeUsuarioInvalido;
+import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
+import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class UsuarioServices {
         this.rankingDAO = rankingDAO;
     }
 
-    public Optional<Usuario> procurarUsuario(Usuario usuario){
+    public Optional<Usuario> procurarUsuario(Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente {
         return usuarioDAO.procurarUsuario(usuario.getNome(),usuario.getSenha());
     }
     public List<Usuario> listar() {

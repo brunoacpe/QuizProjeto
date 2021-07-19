@@ -1,5 +1,7 @@
 package br.com.letscode.DAO;
 
+import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
+import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -62,16 +64,16 @@ public class UsuarioDAO {
         return usuarioList;
     }
 
-    public Optional<Usuario> procurarUsuario(String nome, String senha){
+    public Optional<Usuario> procurarUsuario(String nome, String senha) throws VidaInsuficiente, UsuarioNaoEncontrado {
         List<Usuario> listUsuario = listarTodos();
         Optional<Usuario> usuario = listUsuario.stream()
                 .filter(n -> n.getNome().equalsIgnoreCase(nome)&& senha.equalsIgnoreCase(senha))
                 .findAny();
         if(usuario.get().getVidas()==0){
-            //Lançar um erro dizendo que o usuário não tem vidas para jogar.
+            throw new VidaInsuficiente();
         }
         if (usuario.isEmpty()){
-            //Lançar um erro dizendo que o usuário não foi encontrado.
+            throw new UsuarioNaoEncontrado();
         }
         return usuario;
     }
