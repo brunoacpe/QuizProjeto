@@ -53,6 +53,7 @@ public class MovieDAO {
         //TODO - AINDA FALTA SABER COMO PEGAR APENAS 2 ITENS DESSA LISTA DE FORMA RANDOM;
         return null;
     }
+
     public Movie converterLinhaEmMovie(String linha){
         StringTokenizer st = new StringTokenizer(linha,";");
         Movie movie = new Movie();

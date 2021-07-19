@@ -51,7 +51,7 @@ public class QuizController {
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
         //fiz uma pequena alteraçao comentar com a galera
-        List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());
+        List<Movie> opcoesDoQuiz = listarFilmes(jogador.get());//aqui que busca os filmes
         Collections.sort(opcoesDoQuiz,  Comparator.comparing(Movie::getScore));
         Optional<Movie> opcaoSelecionadaValida = opcoesDoQuiz.stream()
                 .filter(m -> m.getImdbId().equals(opcaoSelecionada))
