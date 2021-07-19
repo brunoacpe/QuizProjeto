@@ -7,6 +7,7 @@ import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
 import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Movie;
 import br.com.letscode.Model.Usuario;
+import br.com.letscode.Services.JogoServices;
 import br.com.letscode.Services.MovieServices;
 import br.com.letscode.Services.QuizzServices;
 import br.com.letscode.Services.UsuarioServices;
@@ -31,12 +32,14 @@ public class QuizController {
     private UsuarioServices usuarioServices;
     private MovieServices movieServices;
     private QuizzServices quizzServices;
+    private JogoServices jogoServices;
 
     @Autowired
-    public QuizController(UsuarioServices usuarioServices, MovieServices movieServices,QuizzServices quizzServices){
+    public QuizController(UsuarioServices usuarioServices, MovieServices movieServices,QuizzServices quizzServices,JogoServices jogoServices){
         this.usuarioServices = usuarioServices;
         this.movieServices = movieServices;
         this.quizzServices = quizzServices;
+        this.jogoServices = jogoServices;
     }
 
 
@@ -71,6 +74,7 @@ public class QuizController {
         }
 
         usuarioServices.vidas(jogador, result);
+        jogoServices.atualizarJogo(jogador);
         return result;
     }
 

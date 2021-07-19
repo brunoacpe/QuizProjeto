@@ -1,6 +1,7 @@
 package br.com.letscode.DAO;
 
 import br.com.letscode.Model.Usuario;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
+@Component
 public class JogosDAO {
 
     private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv";
@@ -47,12 +49,12 @@ public class JogosDAO {
         return usuarioList;
     }
 
-    public Usuario atualizarJogo(Usuario usuario) throws IOException {
+    public Usuario atualizarJogo(Optional<Usuario> usuario) throws IOException {
         List<String> x = new ArrayList<>();
         String line;
         try (BufferedReader br = Files.newBufferedReader(path)) {
             while ((line = br.readLine()) != null) {
-                if (!line.contains(usuario.getNome())) {
+                if (!line.contains(usuario.get().getNome())) {
                     x.add(line);
                 }
             }
@@ -64,7 +66,7 @@ public class JogosDAO {
         }
         writer.close();
 
-        return usuario;
+        return usuario.get();
     }
 
     public Usuario converterLinhaEmJogo(String linha){
