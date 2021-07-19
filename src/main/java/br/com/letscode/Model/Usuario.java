@@ -1,4 +1,5 @@
 package br.com.letscode.Model;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,11 +17,16 @@ import javax.validation.constraints.NotNull;
 
 public class Usuario {
 
-    @NotNull(message = "O nome é obrigatório.")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nome;
-    @NotNull(message = "A senha é obrigatória.")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String senha;
-    private int pontuação;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private double pontuação;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private int vidas = 3 ;
+    private List<Movie> listaDoJogador;
+    private double combo = 1;
+
 
 }

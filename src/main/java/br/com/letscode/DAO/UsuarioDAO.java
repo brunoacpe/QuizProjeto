@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +15,15 @@ import java.beans.BeanProperty;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
@@ -29,8 +33,8 @@ import java.util.stream.Collectors;
 @Component
 public class UsuarioDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
-    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
+    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path pathUsuarios;
     private Path pathRanking;
 
@@ -59,8 +63,18 @@ public class UsuarioDAO {
         return usuarioList;
     }
 
-    public void procurarUsuario(){
-        //TODO - Método que ira fazer a autenticação para ver se o usuário realmente existe e pode jogar;
+    public Optional<Usuario> procurarUsuario(String nome, String senha){
+        List<Usuario> listUsuario = listarTodos();
+        Optional<Usuario> usuario = listUsuario.stream()
+                .filter(n -> n.getNome().equalsIgnoreCase(nome) && n.getSenha().equalsIgnoreCase(DigestUtils.sha1Hex(senha)))
+                .findAny();
+        if(usuario.get().getVidas()==0){
+            //Lançar um erro dizendo que o usuário não tem vidas para jogar.
+        }
+        if (usuario.isEmpty()){
+            //Lançar um erro dizendo que o usuário não foi encontrado.
+        }
+        return usuario;
     }
 
     public Usuario converterLinhaEmUsuario(String linha){
@@ -75,4 +89,26 @@ public class UsuarioDAO {
     public String formatar(Usuario usuario) {
         return String.format("%s;%s;%s\n",usuario.getNome(),usuario.getSenha(),usuario.getVidas());
     }
+
+    public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
+        List<String>  x = new ArrayList<>();
+        String line;
+        try(BufferedReader br = Files.newBufferedReader(pathUsuarios)){
+            while((line = br.readLine())!=null){
+                if(!line.contains(usuario.get().getNome())){
+                    x.add(line);
+                }
+            }
+        }
+
+        Files.delete(pathUsuarios);
+        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv", StandardCharsets.UTF_8);
+        for(String s:x){
+            writer.println(s);
+        }
+        writer.close();
+
+        return usuario;
+    }
+
 }
