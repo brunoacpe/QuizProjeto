@@ -29,13 +29,6 @@ public class CadastroUsuariosController {
         this.usuariosService = usuariosService;
     }
 
-    //comentar sobre
-    private MovieServices movieServices;
-    @Autowired
-    public void setMovieService(MovieServices movieService) {
-        this.movieServices = movieService;
-    }
-
     @GetMapping
     public List<Usuario> listarFilmes(){
         return this.usuariosService.listar();
@@ -48,8 +41,6 @@ public class CadastroUsuariosController {
         usuarioNovo.setSenha(usuario.getSenha());
         usuarioNovo.setVidas(3);
         usuarioNovo.setPontuação(0);
-        //ver com o grupo sobre a lista de filmes para cada usuario
-        usuarioNovo.setListaDoJogador(movieServices.listarTodos());
         return this.usuariosService.criarUsuario(usuario);
     }
 }

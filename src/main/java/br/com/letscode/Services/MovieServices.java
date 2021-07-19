@@ -15,6 +15,7 @@ public class MovieServices {
 
     private MovieDAO movieDAO;
     private List<Movie> listaGame;
+    private List<Movie> doisFilmes;
 
     @Autowired
     public MovieServices(MovieDAO movieDAO){
@@ -26,22 +27,22 @@ public class MovieServices {
     }
 
     //2 Filmes aleatorios
-    public List<Movie> filmesAleatorios(Usuario usuario){
+    public List<Movie> filmesAleatorios(){
         Random gerador = new Random();
         int n1,n2;
-        listaGame = usuario.getListaDoJogador();
-        int tamanhoList = usuario.getListaDoJogador().size();
+        listaGame = movieDAO.listarTodos();
+        int tamanhoList = listaGame.size();
         n1 = gerador.nextInt(tamanhoList);
         n2 = gerador.nextInt(tamanhoList);
         while(n1 == n2){
             n2 = gerador.nextInt(tamanhoList);
         }
-        List<Movie> doisFilmes = new ArrayList<>();
-        doisFilmes.add(usuario.getListaDoJogador().get(n1));
-        doisFilmes.add(usuario.getListaDoJogador().get(n2));
-        listaGame.remove(n1);
-        listaGame.remove(n2);
-        usuario.setListaDoJogador(listaGame);
+        doisFilmes.add(listaGame.get(n1));
+        doisFilmes.add(listaGame.get(n2));
+        return doisFilmes;
+    }
+
+    public List<Movie> getDoisFilmes(){
         return doisFilmes;
     }
 }
