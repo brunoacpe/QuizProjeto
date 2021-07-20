@@ -87,11 +87,14 @@ public class UsuarioDAO {
 
     public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
         List<String>  x = new ArrayList<>();
+        String y = "";
         String line;
         try(var br = Files.newBufferedReader(pathUsuarios)){
             while((line = br.readLine())!=null){
                 if(!line.contains(usuario.get().getNome())){
                     x.add(line);
+                } else {
+                    y = line;
                 }
             }
         }
@@ -101,6 +104,7 @@ public class UsuarioDAO {
         for(String s:x){
             writer.println(s);
         }
+        writer.println(y);
         writer.close();
 
         return usuario;
