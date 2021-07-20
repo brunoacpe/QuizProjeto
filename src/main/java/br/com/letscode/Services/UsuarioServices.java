@@ -44,9 +44,9 @@ public class UsuarioServices {
     }
 
 
-    public Optional<Usuario> atualizarPontos(Usuario usuario, double pontos) throws IOException {
-            usuario.setPontuação(usuario.getPontuação()+pontos);
-            return usuarioDAO.removerUsuarioReescrever(Optional.ofNullable(usuario));
+    public Optional<Usuario> atualizarPontos(Optional<Usuario> usuario, double pontos) throws IOException {
+            usuario.get().setPontuação(usuario.get().getPontuação()+pontos);
+            return usuarioDAO.removerUsuarioReescrever(usuario);
     }
 
     public Optional<Usuario> vidas(Optional<Usuario> usuario, boolean acertouPergunta) throws IOException {

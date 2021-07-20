@@ -65,7 +65,7 @@ public class QuizController {
                 if(opcoesDoQuiz.get(1).getImdbId().equals(opcaoSelecionada)){
                     result = true;
                     jogador.get().setCombo(jogador.get().getCombo()+0.1);
-                    usuarioServices.atualizarPontos(usuario, quizzServices.pontosFeitos(jogador.get()));
+                    usuarioServices.atualizarPontos(jogador, quizzServices.pontosFeitos(jogador.get()));
                 }else{
                     result = false;
                     jogador.get().setCombo(1);

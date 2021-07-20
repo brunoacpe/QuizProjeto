@@ -52,16 +52,6 @@ public class RankingDAO {
         return usuarioList;
     }
 
-    public List<Usuario> listarOrdenado(){
-        List<Usuario> usuarioList = new ArrayList<>();
-        try(BufferedReader br = Files.newBufferedReader(path)){
-            usuarioList = br.lines().map(this::converterLinhaEmRanking).collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //TODO- AINDA IMPLEMENTAR ESSE MÉTODO.
-        return usuarioList;
-    }
 
     private Usuario converterLinhaEmRanking(String linha) {
         StringTokenizer st = new StringTokenizer(linha,";");
