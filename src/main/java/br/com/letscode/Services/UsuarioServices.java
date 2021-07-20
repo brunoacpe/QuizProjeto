@@ -27,7 +27,7 @@ public class UsuarioServices {
     }
 
     public Optional<Usuario> procurarUsuario(Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente {
-        return usuarioDAO.procurarUsuario(usuario.getNome(),usuario.getSenha());
+        return usuarioDAO.procurarUsuario(usuario.getNome(),DigestUtils.sha1Hex(usuario.getSenha()));
     }
     public List<Usuario> listar() {
         return this.usuarioDAO.listarTodos();

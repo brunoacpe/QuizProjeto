@@ -71,14 +71,14 @@ public class QuizController {
                     jogador.get().setCombo(1);
                 }
             }
-            String resultado;
-            if(result){
-                resultado = "TRUE";
-            }else {
-                resultado = "FALSE";
-            }
             usuarioServices.vidas(jogador, result);
             jogoServices.atualizarJogo(jogador);
+            String resultado;
+            if(result){
+                resultado = "TRUE \n Você Acertou ! \n Número de vidas: "+ jogador.get().getVidas();
+            }else {
+                resultado = "FALSE \n Você Errou ! \n Número de vidas: "+ jogador.get().getVidas();
+            }
             return resultado;
         }
 
