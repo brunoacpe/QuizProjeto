@@ -35,8 +35,8 @@ import java.util.stream.Collectors;
 @Component
 public class UsuarioDAO {
 
-    private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
-    private String caminhoRanking = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
+    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path pathUsuarios;
     private Path pathRanking;
 

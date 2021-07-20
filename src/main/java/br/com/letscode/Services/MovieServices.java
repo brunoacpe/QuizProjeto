@@ -14,8 +14,6 @@ import java.util.Random;
 public class MovieServices {
 
     private MovieDAO movieDAO;
-    private List<Movie> listaGame;
-    private List<Movie> doisFilmes;
 
     @Autowired
     public MovieServices(MovieDAO movieDAO){
@@ -25,24 +23,10 @@ public class MovieServices {
     public List<Movie> listarTodos() {
         return movieDAO.listarTodos();
     }
-
     //2 Filmes aleatorios
     public List<Movie> filmesAleatorios(){
-        Random gerador = new Random();
-        int n1,n2;
-        listaGame = movieDAO.listarTodos();
-        int tamanhoList = listaGame.size();
-        n1 = gerador.nextInt(tamanhoList);
-        n2 = gerador.nextInt(tamanhoList);
-        while(n1 == n2){
-            n2 = gerador.nextInt(tamanhoList);
-        }
-        doisFilmes.add(listaGame.get(n1));
-        doisFilmes.add(listaGame.get(n2));
-        return doisFilmes;
+
+        return movieDAO.listarTodos();
     }
 
-    public List<Movie> getDoisFilmes(){
-        return doisFilmes;
-    }
 }

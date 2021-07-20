@@ -45,18 +45,14 @@ public class QuizController {
 
     @GetMapping
     public List<Movie> listarFilmes(){
-        //No caso só retorna 2 filmes;
-        //TODO -- Parte aonde vem a implementação do guilherme ->>
         return movieServices.filmesAleatorios();
     }
 
-    //Post -> enviar requisição usuário, senha e id do filme/série vencedor (Retornar True ou false);
-    //TODO lançar exceção de SenhaUsuarioInvalido e ImdbId do filme inválido
     @PostMapping
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente, IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
         //fiz uma pequena alteraçao comentar com a galera
-        List<Movie> opcoesDoQuiz = movieServices.getDoisFilmes();//aqui que busca os filmes
+        List<Movie> opcoesDoQuiz = movieServices.filmesAleatorios();//aqui que busca os filmes
         Collections.sort(opcoesDoQuiz,  Comparator.comparing(Movie::getScore));
         Optional<Movie> opcaoSelecionadaValida = opcoesDoQuiz.stream()
                 .filter(m -> m.getImdbId().equals(opcaoSelecionada))

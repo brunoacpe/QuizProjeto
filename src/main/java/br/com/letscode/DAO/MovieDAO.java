@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 @Component
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MovieDAO {
 
-    private String caminho = "C:\\Users\\Vitoria\\QuizMovieProjeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
     private Path path;
 
     @PostConstruct
@@ -37,22 +38,21 @@ public class MovieDAO {
 
 
     public List<Movie> listarTodos(){
+        Random random = new Random();
         List<Movie> moviesList = new ArrayList<>();
         try(BufferedReader br = Files.newBufferedReader(path)){
             moviesList = br.lines().map(this::converterLinhaEmMovie).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return moviesList;
+        List<Movie> listaDoisFilmes = new ArrayList<>();
+        listaDoisFilmes.add(moviesList.get(random.nextInt(moviesList.size())));
+        listaDoisFilmes.add(moviesList.get(random.nextInt(moviesList.size())));
+
+        return listaDoisFilmes;
 
     }
 
-
-    public List<Movie> listMovies(){
-        List<Movie> listMovies = listarTodos();
-        //TODO - AINDA FALTA SABER COMO PEGAR APENAS 2 ITENS DESSA LISTA DE FORMA RANDOM;
-        return null;
-    }
 
     public Movie converterLinhaEmMovie(String linha){
         StringTokenizer st = new StringTokenizer(linha,";");

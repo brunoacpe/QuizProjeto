@@ -35,7 +35,7 @@ public class CadastroUsuariosController {
     }
 
     @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario) throws CadastroDeUsuarioInvalido {//Como ele vai reconhecer a requisição como JSON e criar um Objeto???
+    public Usuario criarUsuario(@RequestBody Usuario usuario) throws CadastroDeUsuarioInvalido {
         Usuario usuarioNovo = new Usuario();
         usuarioNovo.setNome(usuario.getNome());
         usuarioNovo.setSenha(usuario.getSenha());
