@@ -64,6 +64,7 @@ public class JogosDAO {
         for(String s:x){
             writer.println(s);
         }
+        writer.println(formatarOptional(usuario));
         writer.close();
 
         return usuario.get();
@@ -76,7 +77,9 @@ public class JogosDAO {
         usuario.setPontuação(Double.valueOf(st.nextToken()));
         return usuario;
     }
-
+    public String formatarOptional(Optional<Usuario> usuario){
+        return String.format("%s;%s",usuario.get().getNome(),usuario.get().getPontuação());
+    }
     public String formatar(Usuario usuario){
         return String.format("%s;%s",usuario.getNome(),usuario.getPontuação());
     }

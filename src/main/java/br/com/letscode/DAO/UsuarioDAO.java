@@ -89,7 +89,7 @@ public class UsuarioDAO {
     }
     public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
         List<String>  x = new ArrayList<>();
-        Optional<Usuario> y = usuario;
+
         String line;
         try(var br = Files.newBufferedReader(pathUsuarios)){
             while((line = br.readLine())!=null){
@@ -104,7 +104,7 @@ public class UsuarioDAO {
         for(String s:x){
             writer.println(s);
         }
-        writer.println(formatarOptional(y));
+        writer.println(formatarOptional(usuario));
         writer.close();
 
         return usuario;
