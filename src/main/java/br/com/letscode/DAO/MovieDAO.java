@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MovieDAO {
 
-    private String caminhoFilmes = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
-    private String caminhoFilmesEscolhidos = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv";
+    private String caminhoFilmes = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminhoFilmesEscolhidos = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv";
     private Path path;
     private Path pathEscolhidos;
 
@@ -110,7 +110,7 @@ public class MovieDAO {
 
     public void apagarQuiz() throws IOException {
         Files.delete(pathEscolhidos);
-        PrintWriter pw = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv");
+        PrintWriter pw = new PrintWriter("C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv");
         pw.close();
     }
 }

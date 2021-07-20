@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 @Component
 public class UsuarioDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
-    private String caminhoRanking = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv";
+    private String caminhoRanking = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path pathUsuarios;
     private Path pathRanking;
 
@@ -60,7 +60,7 @@ public class UsuarioDAO {
     public Optional<Usuario> procurarUsuario(String nome, String senha) throws VidaInsuficiente, UsuarioNaoEncontrado {
         List<Usuario> listUsuario = listarTodos();
         Optional<Usuario> usuario = listUsuario.stream()
-                .filter(n -> n.getNome().equalsIgnoreCase(nome)&& n.getSenha().equalsIgnoreCase(DigestUtils.sha1Hex(senha))).findAny();
+                .filter(n -> n.getNome().equalsIgnoreCase(nome)&& n.getSenha().equalsIgnoreCase(senha)).findAny();
 
         if (usuario.isEmpty()){
             throw new UsuarioNaoEncontrado();
@@ -97,7 +97,7 @@ public class UsuarioDAO {
         }
 
         Files.delete(pathUsuarios);
-        var writer = new PrintWriter("Files\\usuarios.csv", StandardCharsets.UTF_8);
+        var writer = new PrintWriter("C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\usuarios.csv", StandardCharsets.UTF_8);
         for(String s:x){
             writer.println(s);
         }

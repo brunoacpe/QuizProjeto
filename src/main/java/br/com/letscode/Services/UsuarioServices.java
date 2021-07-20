@@ -50,15 +50,11 @@ public class UsuarioServices {
     }
 
     public Optional<Usuario> vidas(Optional<Usuario> usuario, boolean acertouPergunta) throws IOException {
-        int vidasIniciais = usuario.get().getVidas();
-        int vidasAtualizadas;
         if (acertouPergunta) {
-            vidasAtualizadas = usuario.get().getVidas();
-            System.out.println("Você acertou! \nVidas para tentativas =  " + vidasAtualizadas);
+            System.out.println("Você acertou! \nVidas para tentativas =  " + usuario.get().getVidas());
         }else {
-            vidasAtualizadas = vidasIniciais--;
-            usuario.get().setVidas(vidasAtualizadas);
-            System.out.println("Você errou! \nVidas para tentativas =  " + vidasAtualizadas);
+            usuario.get().setVidas(usuario.get().getVidas() - 1);
+            System.out.println("Você errou! \nVidas para tentativas =  " + usuario.get().getVidas());
         }
         usuario = usuarioDAO.removerUsuarioReescrever(usuario);
         if (usuario.get().getVidas()==0){

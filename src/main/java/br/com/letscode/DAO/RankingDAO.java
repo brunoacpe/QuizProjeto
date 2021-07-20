@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class RankingDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path path;
 
     @PostConstruct

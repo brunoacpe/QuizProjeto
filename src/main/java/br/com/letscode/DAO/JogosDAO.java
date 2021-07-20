@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class JogosDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv";
     private Path path;
 
     @PostConstruct
@@ -60,7 +60,7 @@ public class JogosDAO {
             }
         }
         Files.delete(path);
-        PrintWriter writer = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv", StandardCharsets.UTF_8);
+        PrintWriter writer = new PrintWriter("C:\\Users\\Vitoria\\QuizMovieBattle\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\jogos.csv", StandardCharsets.UTF_8);
         for(String s:x){
             writer.println(s);
         }
