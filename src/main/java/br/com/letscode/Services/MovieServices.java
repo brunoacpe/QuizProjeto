@@ -2,13 +2,11 @@ package br.com.letscode.Services;
 
 import br.com.letscode.DAO.MovieDAO;
 import br.com.letscode.Model.Movie;
-import br.com.letscode.Model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 @Component
 public class MovieServices {
@@ -21,12 +19,15 @@ public class MovieServices {
     }
 
     public List<Movie> listarTodos() {
-        return movieDAO.listarTodos();
+        return movieDAO.listarDoisFilmes();
     }
     //2 Filmes aleatorios
     public List<Movie> filmesAleatorios(){
-        return movieDAO.listarTodos();
+        return movieDAO.listarDoisFilmes();
     }
 
 
+    public List<Movie> filmesAleatoriosQuiz() throws IOException {
+        return movieDAO.lerArquivoQuiz();
+    }
 }

@@ -1,23 +1,23 @@
 package br.com.letscode.DAO;
 
 import br.com.letscode.Model.Movie;
-import br.com.letscode.Model.Usuario;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.DenyAll;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,7 +43,7 @@ public class MovieDAO {
     }
 
 
-    public List<Movie> listarTodos() {
+    public List<Movie> listarDoisFilmes() {
         Random random = new Random();
         int n1, n2;
         List<Movie> moviesList = new ArrayList<>();
@@ -62,9 +62,21 @@ public class MovieDAO {
 
         listaDoisFilmes.add(moviesList.get(n1));
         listaDoisFilmes.add(moviesList.get(n2));
-
+        escreverFilmesTemporarios(listaDoisFilmes);
         return listaDoisFilmes;
 
+    }
+
+    public List<Movie> escreverFilmesTemporarios(List<Movie> movieList) {
+        try(var bf = Files.newBufferedWriter(pathEscolhidos, StandardOpenOption.APPEND)){
+            for (int i =0; i< movieList.size();i++){
+                bf.write(formatar(movieList.get(i)));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return movieList;
     }
 
 
@@ -85,5 +97,21 @@ public class MovieDAO {
         return String.format("%s;%s;%s;%s;%s;%s\n", movie.getTitle(), movie.getYear(), movie.getImdbId(), movie.getRating(), movie.getVotes(), movie.getScore());
     }
 
+    public List<Movie> lerArquivoQuiz() throws IOException {
+        List<Movie> moviesList = new ArrayList<>();
+        try (BufferedReader br = Files.newBufferedReader(pathEscolhidos)) {
+            moviesList = br.lines().map(this::converterLinhaEmMovie).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        apagarQuiz();
+        return moviesList;
+    }
+
+    public void apagarQuiz() throws IOException {
+        Files.delete(pathEscolhidos);
+        PrintWriter pw = new PrintWriter("C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv");
+        pw.close();
+    }
 }
 

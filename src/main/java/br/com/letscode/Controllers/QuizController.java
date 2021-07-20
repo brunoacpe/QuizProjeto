@@ -51,7 +51,7 @@ public class QuizController {
     @PostMapping
     public boolean verificarResultado(@PathVariable String opcaoSelecionada, @RequestBody Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente, IOException {
         Optional<Usuario> jogador = usuarioServices.procurarUsuario(usuario);
-        List<Movie> opcoesDoQuiz = listarFilmes();
+        List<Movie> opcoesDoQuiz = movieServices.filmesAleatoriosQuiz();
         Collections.sort(opcoesDoQuiz,  Comparator.comparing(Movie::getScore));
         Optional<Movie> opcaoSelecionadaValida = opcoesDoQuiz.stream()
                 .filter(m -> m.getImdbId().equals(opcaoSelecionada))
