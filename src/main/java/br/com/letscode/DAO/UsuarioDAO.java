@@ -3,19 +3,11 @@ package br.com.letscode.DAO;
 import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
 import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Usuario;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
-import java.beans.BeanProperty;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -47,7 +39,7 @@ public class UsuarioDAO {
     }
 
     public Usuario persistirUsuario(Usuario usuario){
-        try(BufferedWriter bf = Files.newBufferedWriter(pathUsuarios, StandardOpenOption.APPEND)){
+        try(var bf = Files.newBufferedWriter(pathUsuarios, StandardOpenOption.APPEND)){
             bf.write(formatar(usuario));
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +49,7 @@ public class UsuarioDAO {
 
     public List<Usuario> listarTodos(){
         List<Usuario> usuarioList = new ArrayList<>();
-        try(BufferedReader br = Files.newBufferedReader(pathUsuarios)){
+        try(var br = Files.newBufferedReader(pathUsuarios)){
             usuarioList = br.lines().map(this::converterLinhaEmUsuario).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,18 +61,20 @@ public class UsuarioDAO {
         List<Usuario> listUsuario = listarTodos();
         Optional<Usuario> usuario = listUsuario.stream()
                 .filter(n -> n.getNome().equalsIgnoreCase(nome)&& n.getSenha().equalsIgnoreCase(DigestUtils.sha1Hex(senha))).findAny();
-        if(usuario.get().getVidas()==0){
-            throw new VidaInsuficiente();
-        }
+
         if (usuario.isEmpty()){
             throw new UsuarioNaoEncontrado();
         }
+        if(usuario.get().getVidas()==0){
+            throw new VidaInsuficiente();
+        }
+
         return usuario;
     }
 
     public Usuario converterLinhaEmUsuario(String linha){
-        StringTokenizer st = new StringTokenizer(linha,";");
-        Usuario usuario = new Usuario();
+        var st = new StringTokenizer(linha,";");
+        var usuario = new Usuario();
         usuario.setNome(st.nextToken());
         usuario.setSenha(st.nextToken());
         usuario.setVidas(Integer.parseInt(st.nextToken()));
@@ -94,7 +88,7 @@ public class UsuarioDAO {
     public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
         List<String>  x = new ArrayList<>();
         String line;
-        try(BufferedReader br = Files.newBufferedReader(pathUsuarios)){
+        try(var br = Files.newBufferedReader(pathUsuarios)){
             while((line = br.readLine())!=null){
                 if(!line.contains(usuario.get().getNome())){
                     x.add(line);
@@ -103,7 +97,7 @@ public class UsuarioDAO {
         }
 
         Files.delete(pathUsuarios);
-        PrintWriter writer = new PrintWriter("Files\\usuarios.csv", StandardCharsets.UTF_8);
+        var writer = new PrintWriter("Files\\usuarios.csv", StandardCharsets.UTF_8);
         for(String s:x){
             writer.println(s);
         }
