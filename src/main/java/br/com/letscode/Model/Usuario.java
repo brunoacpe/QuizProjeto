@@ -22,6 +22,7 @@ public class Usuario {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String nome;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private double pontuação;
