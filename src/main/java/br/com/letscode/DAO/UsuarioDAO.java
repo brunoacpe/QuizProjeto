@@ -84,17 +84,17 @@ public class UsuarioDAO {
     public String formatar(Usuario usuario) {
         return String.format("%s;%s;%s\n",usuario.getNome(),usuario.getSenha(),usuario.getVidas());
     }
-
+    public String formatarOptional(Optional<Usuario> usuario){
+        return String.format("%s;%s;%s\n",usuario.get().getNome(),usuario.get().getSenha(),usuario.get().getVidas());
+    }
     public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
         List<String>  x = new ArrayList<>();
-        String y = "";
+        Optional<Usuario> y = usuario;
         String line;
         try(var br = Files.newBufferedReader(pathUsuarios)){
             while((line = br.readLine())!=null){
                 if(!line.contains(usuario.get().getNome())){
                     x.add(line);
-                } else {
-                    y = line;
                 }
             }
         }
@@ -104,7 +104,7 @@ public class UsuarioDAO {
         for(String s:x){
             writer.println(s);
         }
-        writer.println(y);
+        writer.println(formatarOptional(y));
         writer.close();
 
         return usuario;
