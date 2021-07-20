@@ -25,8 +25,8 @@ public class MovieServices {
     }
     //2 Filmes aleatorios
     public List<Movie> filmesAleatorios(){
-
         return movieDAO.listarTodos();
     }
+
 
 }

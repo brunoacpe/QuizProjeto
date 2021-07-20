@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.security.DenyAll;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
+
 @Component
 @Data
 @Getter
@@ -28,20 +31,23 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MovieDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminhoFilmes = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmes.csv";
+    private String caminhoFilmesEscolhidos = "C:\\Users\\Eu\\Documents\\GitHub\\Projeto\\QuizProjeto\\src\\main\\java\\br\\com\\letscode\\Files\\filmesEscolhidos.csv";
     private Path path;
+    private Path pathEscolhidos;
 
     @PostConstruct
-    public void init(){
-        this.path = Paths.get(caminho);
+    public void init() {
+        this.path = Paths.get(caminhoFilmes);
+        this.pathEscolhidos = Paths.get(caminhoFilmesEscolhidos);
     }
 
 
-    public List<Movie> listarTodos(){
+    public List<Movie> listarTodos() {
         Random random = new Random();
         int n1, n2;
         List<Movie> moviesList = new ArrayList<>();
-        try(BufferedReader br = Files.newBufferedReader(path)){
+        try (BufferedReader br = Files.newBufferedReader(path)) {
             moviesList = br.lines().map(this::converterLinhaEmMovie).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,19 +56,20 @@ public class MovieDAO {
 
         n1 = random.nextInt(moviesList.size());
         n2 = random.nextInt(moviesList.size());
-        while(n1 == n2){
+        while (n1 == n2) {
             n2 = random.nextInt(moviesList.size());
         }
-        
+
         listaDoisFilmes.add(moviesList.get(n1));
         listaDoisFilmes.add(moviesList.get(n2));
+
         return listaDoisFilmes;
 
     }
 
 
-    public Movie converterLinhaEmMovie(String linha){
-        StringTokenizer st = new StringTokenizer(linha,";");
+    public Movie converterLinhaEmMovie(String linha) {
+        StringTokenizer st = new StringTokenizer(linha, ";");
         Movie movie = new Movie();
         movie.setTitle(st.nextToken());
         movie.setYear(st.nextToken());
@@ -75,7 +82,8 @@ public class MovieDAO {
 
     public String formatar(Movie movie) {
         //Nome - Ano - Rating - Score
-        return String.format("%s;%s;%s;%s;%s;%s\n",movie.getTitle(),movie.getYear(),movie.getImdbId(),movie.getRating(),movie.getVotes(),movie.getScore());
+        return String.format("%s;%s;%s;%s;%s;%s\n", movie.getTitle(), movie.getYear(), movie.getImdbId(), movie.getRating(), movie.getVotes(), movie.getScore());
     }
 
 }
+
