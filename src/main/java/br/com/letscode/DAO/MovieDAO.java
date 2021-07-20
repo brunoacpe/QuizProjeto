@@ -39,6 +39,7 @@ public class MovieDAO {
 
     public List<Movie> listarTodos(){
         Random random = new Random();
+        int n1, n2;
         List<Movie> moviesList = new ArrayList<>();
         try(BufferedReader br = Files.newBufferedReader(path)){
             moviesList = br.lines().map(this::converterLinhaEmMovie).collect(Collectors.toList());
@@ -46,9 +47,15 @@ public class MovieDAO {
             e.printStackTrace();
         }
         List<Movie> listaDoisFilmes = new ArrayList<>();
-        listaDoisFilmes.add(moviesList.get(random.nextInt(moviesList.size())));
-        listaDoisFilmes.add(moviesList.get(random.nextInt(moviesList.size())));
 
+        n1 = random.nextInt(moviesList.size());
+        n2 = random.nextInt(moviesList.size());
+        while(n1 == n2){
+            n2 = random.nextInt(moviesList.size());
+        }
+        
+        listaDoisFilmes.add(moviesList.get(n1));
+        listaDoisFilmes.add(moviesList.get(n2));
         return listaDoisFilmes;
 
     }
