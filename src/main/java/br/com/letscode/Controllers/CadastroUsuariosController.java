@@ -29,27 +29,18 @@ public class CadastroUsuariosController {
         this.usuariosService = usuariosService;
     }
 
-    //comentar sobre
-    private MovieServices movieServices;
-    @Autowired
-    public void setMovieService(MovieServices movieService) {
-        this.movieServices = movieService;
-    }
-
     @GetMapping
     public List<Usuario> listarFilmes(){
         return this.usuariosService.listar();
     }
 
     @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario) throws CadastroDeUsuarioInvalido {//Como ele vai reconhecer a requisição como JSON e criar um Objeto???
+    public Usuario criarUsuario(@RequestBody Usuario usuario) throws CadastroDeUsuarioInvalido {
         Usuario usuarioNovo = new Usuario();
         usuarioNovo.setNome(usuario.getNome());
-        usuarioNovo.setSenha(DigestUtils.sha1Hex(usuario.getSenha()));
+        usuarioNovo.setSenha(usuario.getSenha());
         usuarioNovo.setVidas(3);
         usuarioNovo.setPontuação(0);
-        //ver com o grupo sobre a lista de filmes para cada usuario
-        usuarioNovo.setListaDoJogador(movieServices.listarTodos());
         return this.usuariosService.criarUsuario(usuario);
     }
 }

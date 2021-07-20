@@ -3,7 +3,10 @@ package br.com.letscode.Services;
 import br.com.letscode.DAO.RankingDAO;
 import br.com.letscode.DAO.UsuarioDAO;
 import br.com.letscode.Exceptions.CadastroDeUsuarioInvalido;
+import br.com.letscode.Exceptions.UsuarioNaoEncontrado;
+import br.com.letscode.Exceptions.VidaInsuficiente;
 import br.com.letscode.Model.Usuario;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +26,7 @@ public class UsuarioServices {
         this.rankingDAO = rankingDAO;
     }
 
-    public Optional<Usuario> procurarUsuario(Usuario usuario){
+    public Optional<Usuario> procurarUsuario(Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente {
         return usuarioDAO.procurarUsuario(usuario.getNome(),usuario.getSenha());
     }
     public List<Usuario> listar() {
@@ -33,9 +36,10 @@ public class UsuarioServices {
     public Usuario criarUsuario(Usuario usuario) throws CadastroDeUsuarioInvalido {
         String nome = usuario.getNome();
         String senha = usuario.getSenha();
-        if (!(nome.length() > 4 && nome.length() < 8) || !(senha.length() > 4 && senha.length() < 8)){
+        if (!(nome.length() >= 5 && nome.length() <= 10) || !(senha.length() >= 4 && senha.length() <= 8)){
             throw new CadastroDeUsuarioInvalido();
         }
+        usuario.setSenha(DigestUtils.sha1Hex(usuario.getSenha()));
         return usuarioDAO.persistirUsuario(usuario);
     }
 
@@ -46,15 +50,11 @@ public class UsuarioServices {
     }
 
     public Optional<Usuario> vidas(Optional<Usuario> usuario, boolean acertouPergunta) throws IOException {
-        int vidasIniciais = usuario.get().getVidas();
-        int vidasAtualizadas;
         if (acertouPergunta) {
-            vidasAtualizadas = usuario.get().getVidas();
-            System.out.println("Você acertou! \nVidas para tentativas =  " + vidasAtualizadas);
+            System.out.println("Você acertou! \nVidas para tentativas =  " + usuario.get().getVidas());
         }else {
-            vidasAtualizadas = vidasIniciais--;
-            usuario.get().setVidas(vidasAtualizadas);
-            System.out.println("Você errou! \nVidas para tentativas =  " + vidasAtualizadas);
+            usuario.get().setVidas(usuario.get().getVidas() - 1);
+            System.out.println("Você errou! \nVidas para tentativas =  " + usuario.get().getVidas());
         }
         usuario = usuarioDAO.removerUsuarioReescrever(usuario);
         if (usuario.get().getVidas()==0){

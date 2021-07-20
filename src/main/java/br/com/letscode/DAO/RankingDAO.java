@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class RankingDAO {
 
-    private String caminho = "C:\\Users\\Eu\\Documents\\GitHub\\QuizProjeto1.0\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
+    private String caminho = "C:\\Users\\Vitoria\\QuizProjeto-main\\src\\main\\java\\br\\com\\letscode\\Files\\ranking.csv";
     private Path path;
 
     @PostConstruct
@@ -44,6 +46,9 @@ public class RankingDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        usuarioList.sort(Comparator.comparing(Usuario::getPontuação));
+        Collections.reverse(usuarioList);
+
         return usuarioList;
     }
 
@@ -63,7 +68,6 @@ public class RankingDAO {
         Usuario usuario = new Usuario();
         usuario.setNome(st.nextToken());
         usuario.setPontuação(Integer.valueOf(st.nextToken()));
-        //TODO -- AINDA ANALISAR SE AS VIDAS ESTÃO 0 PARA NÃO RETORNAR ELAS;
         return usuario;
     }
     private String formatar(Optional<Usuario> usuario){
