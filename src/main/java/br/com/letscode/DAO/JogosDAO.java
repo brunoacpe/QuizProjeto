@@ -30,13 +30,13 @@ public class JogosDAO {
         this.path = Paths.get(caminho);
     }
 
-    public Usuario persistirJogo(Usuario usuario){
+    public Usuario persistirJogo(Optional<Usuario> usuario){
         try(BufferedWriter bf = Files.newBufferedWriter(path, StandardOpenOption.APPEND)){
-            bf.write(formatar(usuario));
+            bf.write(formatar(usuario.get()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return usuario;
+        return usuario.get();
     }
 
     public List<Usuario> listarTodosJogos(){

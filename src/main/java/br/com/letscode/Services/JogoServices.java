@@ -19,6 +19,7 @@ public class JogoServices {
 
 
     public Usuario atualizarJogo(Optional<Usuario> usuario) throws IOException {
+        jogoDAO.persistirJogo(usuario);
         return jogoDAO.atualizarJogo(usuario);
     }
 }
