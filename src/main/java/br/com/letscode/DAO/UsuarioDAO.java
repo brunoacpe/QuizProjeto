@@ -77,15 +77,17 @@ public class UsuarioDAO {
         var usuario = new Usuario();
         usuario.setNome(st.nextToken());
         usuario.setSenha(st.nextToken());
+        usuario.setPontuação(Double.valueOf(st.nextToken()));
         usuario.setVidas(Integer.parseInt(st.nextToken()));
+        usuario.setCombo(Double.valueOf(st.nextToken()));
         return usuario;
     }
 
     public String formatar(Usuario usuario) {
-        return String.format("%s;%s;%s\n",usuario.getNome(),usuario.getSenha(),usuario.getVidas());
+        return String.format("%s;%s;%s;%s;%s\r\n",usuario.getNome(),usuario.getSenha(),usuario.getPontuação(),usuario.getVidas(),usuario.getCombo());
     }
     public String formatarOptional(Optional<Usuario> usuario){
-        return String.format("%s;%s;%s\n",usuario.get().getNome(),usuario.get().getSenha(),usuario.get().getVidas());
+        return String.format("%s;%s;%s;%s;%s\r\n",usuario.get().getNome(),usuario.get().getSenha(),usuario.get().getPontuação(),usuario.get().getVidas(),usuario.get().getCombo());
     }
     public Optional<Usuario> removerUsuarioReescrever(Optional<Usuario> usuario) throws IOException {
         List<String>  x = new ArrayList<>();
@@ -104,7 +106,7 @@ public class UsuarioDAO {
         for(String s:x){
             writer.println(s);
         }
-        writer.println(formatarOptional(usuario));
+        writer.print(formatarOptional(usuario));
         writer.close();
 
         return usuario;

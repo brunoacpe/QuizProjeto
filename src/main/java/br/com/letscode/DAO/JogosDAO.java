@@ -64,7 +64,7 @@ public class JogosDAO {
         for(String s:x){
             writer.println(s);
         }
-        writer.println(formatarOptional(usuario));
+        writer.print(formatarOptional(usuario));
         writer.close();
 
         return usuario.get();
@@ -78,10 +78,10 @@ public class JogosDAO {
         return usuario;
     }
     public String formatarOptional(Optional<Usuario> usuario){
-        return String.format("%s;%s",usuario.get().getNome(),usuario.get().getPontuação());
+        return String.format("%s;%s\r\n",usuario.get().getNome(),usuario.get().getPontuação());
     }
     public String formatar(Usuario usuario){
-        return String.format("%s;%s",usuario.getNome(),usuario.getPontuação());
+        return String.format("%s;%s\r\n",usuario.getNome(),usuario.getPontuação());
     }
 
 }

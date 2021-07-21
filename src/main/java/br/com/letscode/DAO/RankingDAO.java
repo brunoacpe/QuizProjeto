@@ -57,10 +57,10 @@ public class RankingDAO {
         StringTokenizer st = new StringTokenizer(linha,";");
         Usuario usuario = new Usuario();
         usuario.setNome(st.nextToken());
-        usuario.setPontuação(Integer.valueOf(st.nextToken()));
+        usuario.setPontuação(Double.valueOf(st.nextToken()));
         return usuario;
     }
     private String formatar(Optional<Usuario> usuario){
-        return String.format("%s,%s",usuario.get().getNome(),usuario.get().getPontuação());
+        return String.format("%s;%s\r\n",usuario.get().getNome(),usuario.get().getPontuação());
     }
 }
