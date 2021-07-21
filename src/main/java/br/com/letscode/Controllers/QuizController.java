@@ -12,12 +12,13 @@ import br.com.letscode.Services.MovieServices;
 import br.com.letscode.Services.QuizzServices;
 import br.com.letscode.Services.UsuarioServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -45,11 +46,13 @@ public class QuizController {
 
 
     @GetMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public List<Movie> listarFilmes(){
         return movieServices.filmesAleatorios();
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public String verificarResultado(@RequestParam String opcaoSelecionada, @RequestBody Usuario usuario) throws UsuarioNaoEncontrado, VidaInsuficiente, IOException {
             Usuario usuarioJogador = new Usuario();
             usuarioJogador.setNome(usuario.getNome());
